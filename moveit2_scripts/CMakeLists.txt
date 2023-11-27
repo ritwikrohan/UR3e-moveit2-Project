@@ -164,28 +164,28 @@ endif()
 #     DESTINATION lib/${PROJECT_NAME}
 # )
 
-# Generate the executable
-add_executable(pick_place
-    src/pick_place.cpp)
-target_include_directories(pick_place
-    PUBLIC include)
-ament_target_dependencies(pick_place
-    ament_cmake
-	rclcpp
-	rclcpp_action
-	moveit_core
-	moveit_ros_planning_interface
-	interactive_markers
-	moveit_ros_planning
-	control_msgs
-	grasping_msgs
-	shape_msgs)
+# # Generate the executable
+# add_executable(pick_place
+#     src/pick_place.cpp)
+# target_include_directories(pick_place
+#     PUBLIC include)
+# ament_target_dependencies(pick_place
+#     ament_cmake
+# 	rclcpp
+# 	rclcpp_action
+# 	moveit_core
+# 	moveit_ros_planning_interface
+# 	interactive_markers
+# 	moveit_ros_planning
+# 	control_msgs
+# 	grasping_msgs
+# 	shape_msgs)
 
-# Install the executable
-install(TARGETS 
-	pick_place
-    DESTINATION lib/${PROJECT_NAME}
-)
+# # Install the executable
+# install(TARGETS 
+# 	pick_place
+#     DESTINATION lib/${PROJECT_NAME}
+# )
 
 # Generate the executable
 add_executable(collision_objects
