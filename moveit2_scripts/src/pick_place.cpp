@@ -505,8 +505,9 @@ int main(int argc, char **argv) {
 
   RCLCPP_INFO(LOGGER, "Open Gripper!");
 
-  move_group_gripper.setNamedTarget("gripper_open_real");
-
+  move_group_gripper.setNamedTarget("gripper_open");
+//   joint_group_positions_gripper[0] = 0.645;
+//   move_group_gripper.setJointValueTarget(joint_group_positions_gripper);
   moveit::planning_interface::MoveGroupInterface::Plan my_plan_gripper;
   bool success_gripper = (move_group_gripper.plan(my_plan_gripper) ==
                           moveit::core::MoveItErrorCode::SUCCESS);
@@ -550,7 +551,7 @@ int main(int argc, char **argv) {
 
   RCLCPP_INFO(LOGGER, "Close Gripper!");
 
-  move_group_gripper.setNamedTarget("gripper_close_real");
+  move_group_gripper.setNamedTarget("gripper_close");
 
   success_gripper = (move_group_gripper.plan(my_plan_gripper) ==
                      moveit::core::MoveItErrorCode::SUCCESS);
