@@ -120,7 +120,8 @@ int main(int argc, char **argv) {
   move_group_gripper.setStartStateToCurrentState();
 
   // Go Home
-  RCLCPP_INFO(LOGGER, "Going Home");
+  // RCLCPP_INFO(LOGGER, "Going Home");
+	RCLCPP_INFO(LOGGER, "Pregrasp Position");
 
   joint_group_positions_arm[0] = -0.457655;  // Shoulder Pan
   joint_group_positions_arm[1] = -1.463627; // Shoulder Lift
