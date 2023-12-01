@@ -116,8 +116,9 @@ private:
 int main(int argc, char **argv) {
   rclcpp::init(argc, argv);
   auto action_client = std::make_shared<GetPoseClient>();
-  double x_pose;
-  double y_pose;
+  double x_pose = std::numeric_limits<double>::quiet_NaN();
+  double y_pose = std::numeric_limits<double>::quiet_NaN();
+
   double error_x = 0.012079;
   double error_y= -0.009217;
   while (!action_client->is_goal_done()) {
@@ -140,6 +141,18 @@ int main(int argc, char **argv) {
         x_pose = object.object.primitive_poses[0].position.x;
         y_pose = object.object.primitive_poses[0].position.y;
     }
+    else {
+            // Assign NaN if object dimensions condition is not met
+            x_pose = std::numeric_limits<double>::quiet_NaN();
+            y_pose = std::numeric_limits<double>::quiet_NaN();
+        }
+  }
+
+   // Check if x_pose and y_pose are still None
+  if (std::isnan(x_pose) || std::isnan(y_pose)) {
+    RCLCPP_ERROR(action_client->get_logger(), "No valid object detected. Exiting.");
+    rclcpp::shutdown();
+    return 1;  // Exit with an error code
   }
 
   rclcpp::NodeOptions node_options;
