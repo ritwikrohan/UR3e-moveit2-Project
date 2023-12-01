@@ -301,9 +301,15 @@ int main(int argc, char **argv) {
   current_state_arm = move_group_arm.getCurrentState(10);
   current_state_arm->copyJointGroupPositions(joint_model_group_arm,
                                              joint_group_positions_arm);
-
-  joint_group_positions_arm[0] = 3.14; // Shoulder Pan
-
+  RCLCPP_INFO(LOGGER, "pan position: %f", joint_group_positions_arm[0]);
+  if (joint_group_positions_arm[0]<-1.57 || joint_group_positions_arm[0]>3.14)
+  {
+    joint_group_positions_arm[0] = 0.00;
+  }
+  else {
+    joint_group_positions_arm[0] = 3.14; // Shoulder Pan
+  }
+  
   move_group_arm.setJointValueTarget(joint_group_positions_arm);
 
   success_arm = (move_group_arm.plan(my_plan_arm) ==
