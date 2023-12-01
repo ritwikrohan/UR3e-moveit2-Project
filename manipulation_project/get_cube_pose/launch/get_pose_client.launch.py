@@ -42,7 +42,7 @@ def generate_launch_description():
     return LaunchDescription(
         [
             perception_action_server_node,
-            get_pose_client_node
-            # rviz_node
+            get_pose_client_node,
+            rviz_node
         ]
     )
