@@ -100,9 +100,13 @@ public:
 
     // Subscribe to head camera cloud
     rclcpp::QoS points_qos(10);
-    points_qos.best_effort();
+    // points_qos.best_effort();
+    // cloud_sub_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
+    //     "/wrist_rgbd_depth_sensor/points", points_qos,
+    //     std::bind(&BasicGraspingPerception::cloud_callback, this, _1));
+    points_qos.reliable();
     cloud_sub_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
-        "/wrist_rgbd_depth_sensor/points", points_qos,
+        "/camera/depth/color/points", points_qos,
         std::bind(&BasicGraspingPerception::cloud_callback, this, _1));
 
     // Setup actionlib server
@@ -209,8 +213,8 @@ private:
     find_objects_ = true;
     rclcpp::Time t = clock_->now();
     while (find_objects_ == true) {
-      std::this_thread::sleep_for(std::chrono::milliseconds(20));
-      if (clock_->now() - t > rclcpp::Duration::from_seconds(3.0)) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(50));
+      if (clock_->now() - t > rclcpp::Duration::from_seconds(200.0)) {
         find_objects_ = false;
         goal_handle->abort(result);
         RCLCPP_ERROR(LOGGER, "Failed to get camera data in alloted time.");

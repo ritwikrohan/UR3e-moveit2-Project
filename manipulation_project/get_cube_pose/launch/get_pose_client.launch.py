@@ -12,7 +12,7 @@ import launch
 def generate_launch_description():
 
     rviz_config_dir = os.path.join(get_package_share_directory(
-        'get_cube_pose'), 'rviz', 'perception.rviz')
+        'get_cube_pose'), 'rviz', 'perception_real.rviz')
 
     perception_action_server_node = Node(
         package='simple_grasping',
@@ -33,7 +33,7 @@ def generate_launch_description():
         executable='rviz2',
         output='screen',
         name='rviz_node',
-        parameters=[{'use_sim_time': True}],
+        parameters=[{'use_sim_time': False}],
         arguments=['-d', rviz_config_dir])
 
     
@@ -42,7 +42,7 @@ def generate_launch_description():
     return LaunchDescription(
         [
             perception_action_server_node,
-            get_pose_client_node,
-            rviz_node
+            get_pose_client_node
+            # rviz_node
         ]
     )

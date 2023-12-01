@@ -10,6 +10,17 @@ def generate_launch_description():
     # moveit_config = MoveItConfigsBuilder("my").to_moveit_configs()
     moveit_config = MoveItConfigsBuilder("name",package_name="real_moveit_config").to_moveit_configs()
 
+    rviz_config_dir = os.path.join(get_package_share_directory(
+        'get_cube_pose'), 'rviz', 'perception_real.rviz')
+
+    perception_action_server_node = Node(
+        package='simple_grasping',
+        executable='basic_grasping_perception_node',
+        name='basic_grasping_perception_node',
+        output='screen',
+        parameters=[{'debug_topics': True}]
+    )
+
     # MoveItCpp demo executable
     moveit_cpp_node = Node(
         name="pick_and_place_perception_real",
@@ -24,6 +35,17 @@ def generate_launch_description():
         ],
     )
 
+    rviz_node = Node(
+        package='rviz2',
+        executable='rviz2',
+        output='screen',
+        name='rviz_node',
+        parameters=[{'use_sim_time': True}],
+        arguments=['-d', rviz_config_dir])
+
     return LaunchDescription(
-        [moveit_cpp_node]
+        [moveit_cpp_node,
+        perception_action_server_node,
+        rviz_node]
     )
+
